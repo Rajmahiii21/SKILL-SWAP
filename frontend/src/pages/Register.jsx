@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API from "../utils/axios"; // axios instance
 import "./Register.css";
 
 function Register() {
@@ -6,8 +7,9 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validation
@@ -15,7 +17,7 @@ function Register() {
       setError("Username must be at least 3 characters.");
       return;
     }
-    if (!email.includes("@gmail.com")) {
+    if (!email.endsWith("@gmail.com")) {
       setError("Email must be a valid Gmail address.");
       return;
     }
@@ -25,7 +27,17 @@ function Register() {
     }
 
     setError("");
-    alert("Registered successfully (mock)!");
+    setSuccess("");
+
+    try {
+      const res = await API.post("/auth/register", { username, email, password });
+      setSuccess(res.data.message || "Registered successfully!");
+      setUsername("");
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong");
+    }
   };
 
   return (
@@ -69,6 +81,7 @@ function Register() {
           />
 
           {error && <p className="error-message">{error}</p>}
+          {success && <p className="success-message">{success}</p>}
 
           <button type="submit" className="register-button">
             Register
