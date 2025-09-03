@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // At the top of Home.jsx
 import { FaRegHandshake } from "react-icons/fa"; // For handshake
 import { FiUsers, FiAward } from "react-icons/fi"; // For other icons
@@ -21,7 +22,8 @@ function Home() {
             and knowledge. Offer what you know, and learn what you want to know.
           </p>
           <div className="hero-buttons">
-            <button className="btn primary">Get Started</button>
+            <Link to="/register" className="btn primary">Get Started</Link>
+            
             <button className="btn secondary">Explore Skills</button>
           </div>
         </div>
@@ -101,7 +103,7 @@ function Home() {
       <section className="cta">
         <h2>Ready to Start?</h2>
         <p>Join thousands who are sharing knowledge and learning new things.</p>
-        <button className="btn primary">Sign Up Now</button>
+        <Link to="/register"  className="btn primary">Sign Up Now</Link>
       </section>
 
       {/* Footer */}
